@@ -88,7 +88,7 @@
          "environment": {
             "MB_URL_TEST__HTTPBIN_PREFIX": "http://httpbin"
          },
-         "image": "silex/emacs:24.5-dev",
+         "image": "silex/emacs:24.5-ci-cask",
          "name": "test-emacs24.5",
          "volumes": [
             {
@@ -114,7 +114,7 @@
          "environment": {
             "MB_URL_TEST__HTTPBIN_PREFIX": "http://httpbin"
          },
-         "image": "silex/emacs:25.1-dev",
+         "image": "silex/emacs:25.1-ci-cask",
          "name": "test-emacs25.1",
          "volumes": [
             {
@@ -140,7 +140,7 @@
          "environment": {
             "MB_URL_TEST__HTTPBIN_PREFIX": "http://httpbin"
          },
-         "image": "silex/emacs:25.2-dev",
+         "image": "silex/emacs:25.2-ci-cask",
          "name": "test-emacs25.2",
          "volumes": [
             {
@@ -166,7 +166,7 @@
          "environment": {
             "MB_URL_TEST__HTTPBIN_PREFIX": "http://httpbin"
          },
-         "image": "silex/emacs:25.3-dev",
+         "image": "silex/emacs:25.3-ci-cask",
          "name": "test-emacs25.3",
          "volumes": [
             {
@@ -192,7 +192,7 @@
          "environment": {
             "MB_URL_TEST__HTTPBIN_PREFIX": "http://httpbin"
          },
-         "image": "silex/emacs:26.1-dev",
+         "image": "silex/emacs:26.1-ci-cask",
          "name": "test-emacs26.1",
          "volumes": [
             {
@@ -218,7 +218,7 @@
          "environment": {
             "MB_URL_TEST__HTTPBIN_PREFIX": "http://httpbin"
          },
-         "image": "silex/emacs:26.2-dev",
+         "image": "silex/emacs:26.2-ci-cask",
          "name": "test-emacs26.2",
          "volumes": [
             {
@@ -244,7 +244,7 @@
          "environment": {
             "MB_URL_TEST__HTTPBIN_PREFIX": "http://httpbin"
          },
-         "image": "silex/emacs:26.3-dev",
+         "image": "silex/emacs:26.3-ci-cask",
          "name": "test-emacs26.3",
          "volumes": [
             {
@@ -364,7 +364,7 @@
          "environment": {
             "MB_URL_TEST__HTTPBIN_PREFIX": "http://httpbin"
          },
-         "image": "silex/emacs:24.4-dev",
+         "image": "silex/emacs:24.4-ci-cask",
          "name": "test-emacs24.4",
          "volumes": [
             {

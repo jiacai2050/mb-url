@@ -14,7 +14,7 @@ local linuxbrew_debian_cmds(cmds) = [
 
 local test_step(emacs_ver) = {
   name: 'test-emacs%s' % emacs_ver,
-  image: 'silex/emacs:%s-dev' % emacs_ver,
+  image: 'silex/emacs:%s-ci-cask' % emacs_ver,
   commands: [
     'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"',
     'cask install',
