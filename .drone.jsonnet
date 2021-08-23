@@ -19,7 +19,7 @@ local test_step(emacs_ver) = {
     'eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"',
     'cask install',
     'sleep 15',
-    # Waiting for httpbin
+    // Waiting for httpbin
     'cask exec ert-runner',
   ],
   volumes: [
@@ -51,8 +51,8 @@ local generate_pipeline(args) = {
   ],
   steps: [
     {
-      # We have to generate `en_US.UTF-8` locale because brew sets `LC_ALL` to
-      # it.
+      // We have to generate `en_US.UTF-8` locale because brew sets `LC_ALL` to
+      // it.
       name: 'install locales',
       image: args.linuxbrew_image,
       commands: args.locale_gen_cmds_func([
@@ -142,12 +142,12 @@ std.map(generate_pipeline, [
     emacs_vers: ['24.5', '25.1', '25.2', '25.3', '26.1', '26.2', '26.3'],
   },
   {
-    # According to [1] and [2], Emacs 24.4 cannot be built on Ubuntu 18.04, so
-    # `silex/emacs:24.4` use Ubuntu 12.04 as its base image.  We have to
-    # install dependencies on Ubuntu 12.04.
-    #
-    # [1]: https://github.com/Silex/docker-emacs/issues/34
-    # [2]: https://github.com/Silex/docker-emacs/commit/df66168dc4edc5a746351685b88ac59d3efcb183
+    // According to [1] and [2], Emacs 24.4 cannot be built on Ubuntu 18.04, so
+    // `silex/emacs:24.4` use Ubuntu 12.04 as its base image.  We have to
+    // install dependencies on Ubuntu 12.04.
+    //
+    // [1]: https://github.com/Silex/docker-emacs/issues/34
+    // [2]: https://github.com/Silex/docker-emacs/commit/df66168dc4edc5a746351685b88ac59d3efcb183
     pipeline_name: 'test for emacs 24.4',
     linuxbrew_image: 'ubuntu:12.04',
     locale_gen_cmds_func: locale_gen_cmds_ubuntu1204,
