@@ -35,6 +35,7 @@ local generate_pipeline(args) = {
     {
       name: 'install ci deps',
       image: 'metacall/guix:latest',
+      privileged: true,
       commands: [
         'guix pull',
         'guix upgrade',
