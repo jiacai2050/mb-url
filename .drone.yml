@@ -11,73 +11,23 @@
    "steps": [
       {
          "commands": [
-            "apt-get update",
-            "apt-get install --yes locales",
-            "echo \"en_US.UTF-8 UTF-8\" > /etc/locale.gen",
-            "locale-gen"
+            "guix pull",
+            "guix upgrade",
+            "guix pack --format=tarball --relocatable --relocatable --symlink=/bin=bin --root=/opt/guix-pack.tar.gz --manifest=manifest.scm",
+            "tar x -z -f /opt/guix-pack.tar.gz -C /opt/guix"
          ],
-         "image": "buildpack-deps:stable",
-         "name": "install locales",
-         "volumes": [
-            {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            }
-         ]
-      },
-      {
-         "commands": [
-            "apt-get update",
-            "apt-get install --yes git",
-            "git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew",
-            "mkdir -p /home/linuxbrew/.linuxbrew/bin",
-            "ln -s ../Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin"
-         ],
-         "image": "buildpack-deps:stable",
-         "name": "install Linuxbrew",
-         "volumes": [
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
-            }
-         ]
-      },
-      {
-         "commands": [
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
-            "brew update",
-            "brew bundle"
-         ],
-         "depends_on": [
-            "install locales",
-            "install Linuxbrew"
-         ],
-         "environment": {
-            "HOMEBREW_DEVELOPER": 1,
-            "HOMEBREW_NO_ANALYTICS": 1,
-            "HOMEBREW_NO_AUTO_UPDATE": 1,
-            "HOMEBREW_NO_INSTALL_CLEANUP": 1
-         },
-         "image": "buildpack-deps:stable",
+         "image": "metacall/guix:latest",
          "name": "install ci deps",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
-            },
-            {
-               "name": "cache",
-               "path": "/root/.cache"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       },
       {
          "commands": [
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
+            "PATH=/opt/guix/bin:$PATH",
             "cask install",
             "sleep 15",
             "cask exec ert-runner"
@@ -92,18 +42,14 @@
          "name": "test-emacs24.5",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       },
       {
          "commands": [
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
+            "PATH=/opt/guix/bin:$PATH",
             "cask install",
             "sleep 15",
             "cask exec ert-runner"
@@ -118,18 +64,14 @@
          "name": "test-emacs25.1",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       },
       {
          "commands": [
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
+            "PATH=/opt/guix/bin:$PATH",
             "cask install",
             "sleep 15",
             "cask exec ert-runner"
@@ -144,18 +86,14 @@
          "name": "test-emacs25.2",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       },
       {
          "commands": [
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
+            "PATH=/opt/guix/bin:$PATH",
             "cask install",
             "sleep 15",
             "cask exec ert-runner"
@@ -170,18 +108,14 @@
          "name": "test-emacs25.3",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       },
       {
          "commands": [
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
+            "PATH=/opt/guix/bin:$PATH",
             "cask install",
             "sleep 15",
             "cask exec ert-runner"
@@ -196,18 +130,14 @@
          "name": "test-emacs26.1",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       },
       {
          "commands": [
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
+            "PATH=/opt/guix/bin:$PATH",
             "cask install",
             "sleep 15",
             "cask exec ert-runner"
@@ -222,18 +152,14 @@
          "name": "test-emacs26.2",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       },
       {
          "commands": [
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
+            "PATH=/opt/guix/bin:$PATH",
             "cask install",
             "sleep 15",
             "cask exec ert-runner"
@@ -248,27 +174,15 @@
          "name": "test-emacs26.3",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       }
    ],
    "volumes": [
       {
-         "name": "cache",
-         "temp": { }
-      },
-      {
-         "name": "locales",
-         "temp": { }
-      },
-      {
-         "name": "linuxbrew",
+         "name": "guix",
          "temp": { }
       }
    ]
@@ -286,74 +200,23 @@
    "steps": [
       {
          "commands": [
-            "apt-get update",
-            "apt-get install --yes locales",
-            "locale-gen en_US.UTF-8"
+            "guix pull",
+            "guix upgrade",
+            "guix pack --format=tarball --relocatable --relocatable --symlink=/bin=bin --root=/opt/guix-pack.tar.gz --manifest=manifest.scm",
+            "tar x -z -f /opt/guix-pack.tar.gz -C /opt/guix"
          ],
-         "image": "ubuntu:12.04",
-         "name": "install locales",
-         "volumes": [
-            {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            }
-         ]
-      },
-      {
-         "commands": [
-            "apt-get update",
-            "apt-get install --yes git",
-            "git clone https://github.com/Homebrew/brew /home/linuxbrew/.linuxbrew/Homebrew",
-            "mkdir -p /home/linuxbrew/.linuxbrew/bin",
-            "ln -s ../Homebrew/bin/brew /home/linuxbrew/.linuxbrew/bin"
-         ],
-         "image": "ubuntu:12.04",
-         "name": "install Linuxbrew",
-         "volumes": [
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
-            }
-         ]
-      },
-      {
-         "commands": [
-            "apt-get update",
-            "apt-get install --yes build-essential curl file git",
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
-            "brew update",
-            "brew bundle"
-         ],
-         "depends_on": [
-            "install locales",
-            "install Linuxbrew"
-         ],
-         "environment": {
-            "HOMEBREW_DEVELOPER": 1,
-            "HOMEBREW_NO_ANALYTICS": 1,
-            "HOMEBREW_NO_AUTO_UPDATE": 1,
-            "HOMEBREW_NO_INSTALL_CLEANUP": 1
-         },
-         "image": "ubuntu:12.04",
+         "image": "metacall/guix:latest",
          "name": "install ci deps",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
-            },
-            {
-               "name": "cache",
-               "path": "/root/.cache"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       },
       {
          "commands": [
-            "eval \"$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)\"",
+            "PATH=/opt/guix/bin:$PATH",
             "cask install",
             "sleep 15",
             "cask exec ert-runner"
@@ -368,27 +231,15 @@
          "name": "test-emacs24.4",
          "volumes": [
             {
-               "name": "locales",
-               "path": "/usr/lib/locale"
-            },
-            {
-               "name": "linuxbrew",
-               "path": "/home/linuxbrew/.linuxbrew"
+               "name": "guix",
+               "path": "/opt/guix"
             }
          ]
       }
    ],
    "volumes": [
       {
-         "name": "cache",
-         "temp": { }
-      },
-      {
-         "name": "locales",
-         "temp": { }
-      },
-      {
-         "name": "linuxbrew",
+         "name": "guix",
          "temp": { }
       }
    ]
