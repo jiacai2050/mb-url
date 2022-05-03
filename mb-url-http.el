@@ -28,7 +28,7 @@
 
 ;;; Code:
 
-(require 'cl-lib)
+(require 'cl-extra)
 (require 'url-http)
 
 (require 'mb-url)
@@ -241,25 +241,40 @@ Pass NAME, BUFFER, COMMAND and SENTINEL to `start-process' as is."
   "Curl program."
   :group 'mb-url)
 
+(defcustom mb-url-http-curl-proxy nil
+  "Proxy address for curl, HTTP(s) or Socks. `--proxy' option"
+  :group 'mb-url)
+
+(defcustom mb-url-http-curl-noproxy '()
+  "List of URL address regexp without using proxy"
+  :group 'mb-url)
+
 (defcustom mb-url-http-curl-switches '()
   "List of strings specifying switches to be passed to Curl."
   :group 'mb-url)
 
 (defun mb-url-http--curl-command-list (url)
   "Return curl command list for URL."
-  `(,mb-url-http-curl-program
-    "--silent" "--include"
-    ,@(if (string= "HEAD" url-request-method)
-          (list "--head")
-        (list "--request" url-request-method))
-    ,@(if (mb-url-string-empty-p url-request-data)
-          '()
-        (list "--data-binary" "@-"))
-    ,@(apply #'append
-             (mapcar (lambda (arg) (list "--header" arg))
-                     (mb-url-http-headers-list)))
-    ,(url-recreate-url url)
-    ,@mb-url-http-curl-switches))
+  (let* ((url (url-recreate-url url))
+         (matched (cl-some (lambda (rule-regexp)
+                                   (string-match-p rule-regexp url))
+                           mb-url-http-curl-noproxy))
+         (use-proxy (and mb-url-http-curl-proxy
+                          (not matched))))
+    `(,mb-url-http-curl-program
+      "--silent" "--include"
+      ,@(if (string= "HEAD" url-request-method)
+            (list "--head")
+          (list "--request" url-request-method))
+      ,@(if (mb-url-string-empty-p url-request-data)
+            '()
+          (list "--data-binary" "@-"))
+      ,@(when use-proxy (list "--proxy" mb-url-http-curl-proxy))
+      ,@(apply #'append
+               (mapcar (lambda (arg) (list "--header" arg))
+                       (mb-url-http-headers-list)))
+      ,url
+      ,@mb-url-http-curl-switches)))
 
 (defun mb-url-http-sentinel--curl (proc evt)
   "Curl return the proxy response before the actual remote server response.
